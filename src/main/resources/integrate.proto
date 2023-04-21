@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "integrate";
+option java_outer_classname = "integrateImpl";
+
+package integrate;
+
+service integrate {
+	rpc doIntegration(stream Integration) returns(ResponseMessage) {}
+}
+
+message Integration {
+	uint32 id = 1;
+	string name = 2;
+	
+}
+
+message ResponseMessage {
+	string message = 1;
+}

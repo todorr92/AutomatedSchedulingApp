@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "schedule";
+option java_outer_classname = "scheduleImpl";
+
+package schedule;
+
+// Interface exported by the server.
+service schedule {
+  
+  rpc bookEvent(Event) returns (ResponseMessage) {}
+  rpc sendReminder(SendReminder) returns (stream ResponseMessage) {}
+  
+}
+
+message Date {
+  // Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+  // a year.
+  int32 year = 1;
+
+  // Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+  // month and day.
+  int32 month = 2;
+
+  // Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+  // to specify a year by itself or a year and month where the day isn't
+  // significant.
+  int32 day = 3;
+}
+message Event {
+	uint32 id = 1;
+	string name = 2;
+	string message = 3;
+	Date date = 4;  
+	string email = 5;
+}
+
+message SendReminder {
+	string message = 1;
+}
+
+message ResponseMessage {
+	string message = 1;
+}
