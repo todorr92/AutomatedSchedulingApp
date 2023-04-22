@@ -19,6 +19,10 @@ import javax.swing.AbstractListModel;
 
 public class GUIclient extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
@@ -185,8 +189,12 @@ public class GUIclient extends JFrame {
 		reminderMessageField.setBounds(491, 440, 250, 40);
 		contentPane.add(reminderMessageField);
 		
-		JList integrationList = new JList();
-		integrationList.setModel(new AbstractListModel() {
+		JList<Object> integrationList = new JList<Object>();
+		integrationList.setModel(new AbstractListModel<Object>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			String[] values = new String[] {"Google", "Microsoft Outlook", "Zoom", "Microsoft Teams"};
 			public int getSize() {
 				return values.length;
