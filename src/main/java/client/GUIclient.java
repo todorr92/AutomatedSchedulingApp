@@ -20,11 +20,11 @@ import javax.swing.AbstractListModel;
 public class GUIclient extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField usernameField;
 	private JPasswordField passwordField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField eventField;
+	private JTextField eventEmailField;
+	private JTextField reminderEmailField;
 
 	/**
 	 * Launch the application.
@@ -67,21 +67,21 @@ public class GUIclient extends JFrame {
 		password.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(password);
 		
-		textField = new JTextField();
-		textField.setBounds(83, 13, 96, 19);
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(textField);
-		textField.setColumns(10);
+		usernameField = new JTextField();
+		usernameField.setBounds(83, 13, 96, 19);
+		usernameField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(usernameField);
+		usernameField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.setBounds(384, 12, 85, 21);
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(btnNewButton);
+		JButton loginBtn = new JButton("Login");
+		loginBtn.setBounds(384, 12, 85, 21);
+		loginBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(loginBtn);
 		
-		JLabel messageForLoginLogout = new JLabel("Placeholder for messages");
-		messageForLoginLogout.setBounds(519, 6, 250, 50);
-		messageForLoginLogout.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(messageForLoginLogout);
+		JLabel messages = new JLabel("Placeholder for messages");
+		messages.setBounds(519, 6, 250, 50);
+		messages.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(messages);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(266, 14, 96, 19);
@@ -108,21 +108,21 @@ public class GUIclient extends JFrame {
 		eventDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(eventDate);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(112, 151, 250, 19);
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_1.setColumns(10);
-		contentPane.add(textField_1);
+		eventField = new JTextField();
+		eventField.setBounds(112, 151, 250, 19);
+		eventField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		eventField.setColumns(10);
+		contentPane.add(eventField);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(519, 151, 250, 19);
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_2.setColumns(10);
-		contentPane.add(textField_2);
+		eventEmailField = new JTextField();
+		eventEmailField.setBounds(519, 151, 250, 19);
+		eventEmailField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		eventEmailField.setColumns(10);
+		contentPane.add(eventEmailField);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(113, 193, 249, 152);
-		contentPane.add(textArea);
+		JTextArea eventMessageField = new JTextArea();
+		eventMessageField.setBounds(113, 193, 249, 152);
+		contentPane.add(eventMessageField);
 		
 		JLabel lblNewLabel_3_3_1 = new JLabel("Choose");
 		lblNewLabel_3_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -147,10 +147,10 @@ public class GUIclient extends JFrame {
 		lblIntegrate.setBounds(10, 554, 200, 29);
 		contentPane.add(lblIntegrate);
 		
-		JButton createEvent = new JButton("Create Event");
-		createEvent.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		createEvent.setBounds(337, 370, 145, 21);
-		contentPane.add(createEvent);
+		JButton btnCreateEvent = new JButton("Create Event");
+		btnCreateEvent.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnCreateEvent.setBounds(337, 370, 145, 21);
+		contentPane.add(btnCreateEvent);
 		
 		JCalendar calendar = new JCalendar();
 		calendar.setBounds(519, 193, 250, 152);
@@ -165,28 +165,28 @@ public class GUIclient extends JFrame {
 		lblSendReminder.setBounds(10, 412, 200, 29);
 		contentPane.add(lblSendReminder);
 		
-		JLabel email_1 = new JLabel("Email");
-		email_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		email_1.setBounds(10, 451, 67, 19);
-		contentPane.add(email_1);
+		JLabel reminderEmail = new JLabel("Email");
+		reminderEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		reminderEmail.setBounds(10, 451, 67, 19);
+		contentPane.add(reminderEmail);
 		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_3.setColumns(10);
-		textField_3.setBounds(75, 451, 250, 19);
-		contentPane.add(textField_3);
+		reminderEmailField = new JTextField();
+		reminderEmailField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		reminderEmailField.setColumns(10);
+		reminderEmailField.setBounds(75, 451, 250, 19);
+		contentPane.add(reminderEmailField);
 		
-		JLabel eventMessage_1 = new JLabel("Message");
-		eventMessage_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		eventMessage_1.setBounds(426, 447, 67, 19);
-		contentPane.add(eventMessage_1);
+		JLabel reminderMessage = new JLabel("Message");
+		reminderMessage.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		reminderMessage.setBounds(426, 447, 67, 19);
+		contentPane.add(reminderMessage);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(491, 440, 250, 40);
-		contentPane.add(textArea_1);
+		JTextArea reminderMessageField = new JTextArea();
+		reminderMessageField.setBounds(491, 440, 250, 40);
+		contentPane.add(reminderMessageField);
 		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
+		JList integrationList = new JList();
+		integrationList.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Google", "Microsoft Outlook", "Zoom", "Microsoft Teams"};
 			public int getSize() {
 				return values.length;
@@ -195,10 +195,10 @@ public class GUIclient extends JFrame {
 				return values[index];
 			}
 		});
-		list.setSelectedIndex(0);
-		list.setLayoutOrientation(JList.VERTICAL_WRAP);
-		list.setBounds(83, 593, 242, 68);
-		contentPane.add(list);
+		integrationList.setSelectedIndex(0);
+		integrationList.setLayoutOrientation(JList.VERTICAL_WRAP);
+		integrationList.setBounds(83, 593, 242, 68);
+		contentPane.add(integrationList);
 		
 		JButton btnIntegrate = new JButton("Integrate");
 		btnIntegrate.setFont(new Font("Tahoma", Font.PLAIN, 14));
