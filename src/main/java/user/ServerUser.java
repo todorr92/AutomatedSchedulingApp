@@ -45,8 +45,13 @@ public class ServerUser extends userImplBase{
 
 	@Override
 	public void userLogout(EmptyMessage request, StreamObserver<LogOutMessage> responseObserver) {
-		// TODO Auto-generated method stub
-		super.userLogout(request, responseObserver);
+		
+		LogOutMessage.Builder message = LogOutMessage.newBuilder();
+		
+		message.setMessage("See you next time.");
+		
+		responseObserver.onNext(message.build());
+		responseObserver.onCompleted();
 	}
 	
 
