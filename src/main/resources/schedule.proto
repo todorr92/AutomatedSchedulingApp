@@ -8,10 +8,10 @@ package schedule;
 
 // Interface exported by the server.
 service schedule {
-  
+
   rpc bookEvent(Event) returns (ResponseMessage) {}
   rpc sendReminder(SendReminder) returns (stream ResponseMessage) {}
-  
+
 }
 
 message Date {
@@ -32,12 +32,13 @@ message Event {
 	uint32 id = 1;
 	string name = 2;
 	string message = 3;
-	Date date = 4;  
+	Date date = 4;
 	string email = 5;
 }
 
 message SendReminder {
 	string message = 1;
+	string email = 2;
 }
 
 message ResponseMessage {

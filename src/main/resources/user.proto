@@ -8,16 +8,16 @@ package user;
 
 // Interface exported by the server.
 service user {
-  
+
   rpc userLogin(LoginRequest) returns (LoginMessage) {}
   rpc userLogout(EmptyMessage) returns (LogOutMessage) {}
-  
-    
+
+
 }
 
 message LoginRequest {
   string userName = 1;
-  string password = 2;  
+  string password = 2;
 }
 
 message LoginMessage {
@@ -28,4 +28,4 @@ message LogOutMessage {
 	string message = 1;
 }
 
-message EmptyMessage {} 
+message EmptyMessage {}
