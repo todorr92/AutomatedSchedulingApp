@@ -69,7 +69,7 @@ public final class scheduleGrpc {
       fullMethodName = SERVICE_NAME + '/' + "sendReminder",
       requestType = schedule.SendReminder.class,
       responseType = schedule.ResponseMessage.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<schedule.SendReminder,
       schedule.ResponseMessage> getSendReminderMethod() {
     io.grpc.MethodDescriptor<schedule.SendReminder, schedule.ResponseMessage> getSendReminderMethod;
@@ -78,7 +78,7 @@ public final class scheduleGrpc {
         if ((getSendReminderMethod = scheduleGrpc.getSendReminderMethod) == null) {
           scheduleGrpc.getSendReminderMethod = getSendReminderMethod = 
               io.grpc.MethodDescriptor.<schedule.SendReminder, schedule.ResponseMessage>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "schedule.schedule", "sendReminder"))
               .setSampledToLocalTracing(true)
@@ -149,7 +149,7 @@ public final class scheduleGrpc {
                   this, METHODID_BOOK_EVENT)))
           .addMethod(
             getSendReminderMethod(),
-            asyncServerStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 schedule.SendReminder,
                 schedule.ResponseMessage>(
@@ -191,7 +191,7 @@ public final class scheduleGrpc {
      */
     public void sendReminder(schedule.SendReminder request,
         io.grpc.stub.StreamObserver<schedule.ResponseMessage> responseObserver) {
-      asyncServerStreamingCall(
+      asyncUnaryCall(
           getChannel().newCall(getSendReminderMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -226,9 +226,8 @@ public final class scheduleGrpc {
 
     /**
      */
-    public java.util.Iterator<schedule.ResponseMessage> sendReminder(
-        schedule.SendReminder request) {
-      return blockingServerStreamingCall(
+    public schedule.ResponseMessage sendReminder(schedule.SendReminder request) {
+      return blockingUnaryCall(
           getChannel(), getSendReminderMethod(), getCallOptions(), request);
     }
   }
@@ -260,6 +259,14 @@ public final class scheduleGrpc {
         schedule.Event request) {
       return futureUnaryCall(
           getChannel().newCall(getBookEventMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<schedule.ResponseMessage> sendReminder(
+        schedule.SendReminder request) {
+      return futureUnaryCall(
+          getChannel().newCall(getSendReminderMethod(), getCallOptions()), request);
     }
   }
 

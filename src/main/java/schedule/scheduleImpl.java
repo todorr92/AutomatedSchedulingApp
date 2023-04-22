@@ -47,13 +47,13 @@ public final class scheduleImpl {
       "ar\030\001 \001(\005\022\r\n\005month\030\002 \001(\005\022\013\n\003day\030\003 \001(\005\"_\n\005" +
       "Event\022\n\n\002id\030\001 \001(\r\022\014\n\004name\030\002 \001(\t\022\017\n\007messa" +
       "ge\030\003 \001(\t\022\034\n\004date\030\004 \001(\0132\016.schedule.Date\022\r" +
-      "\n\005email\030\005 \001(\t\"\037\n\014SendReminder\022\017\n\007message" +
-      "\030\001 \001(\t\"\"\n\017ResponseMessage\022\017\n\007message\030\001 \001" +
-      "(\t2\214\001\n\010schedule\0229\n\tbookEvent\022\017.schedule." +
-      "Event\032\031.schedule.ResponseMessage\"\000\022E\n\014se" +
-      "ndReminder\022\026.schedule.SendReminder\032\031.sch" +
-      "edule.ResponseMessage\"\0000\001B\032\n\010scheduleB\014s" +
-      "cheduleImplP\001b\006proto3"
+      "\n\005email\030\005 \001(\t\".\n\014SendReminder\022\017\n\007message" +
+      "\030\001 \001(\t\022\r\n\005email\030\002 \001(\t\"\"\n\017ResponseMessage" +
+      "\022\017\n\007message\030\001 \001(\t2\212\001\n\010schedule\0229\n\tbookEv" +
+      "ent\022\017.schedule.Event\032\031.schedule.Response" +
+      "Message\"\000\022C\n\014sendReminder\022\026.schedule.Sen" +
+      "dReminder\032\031.schedule.ResponseMessage\"\000B\032" +
+      "\n\010scheduleB\014scheduleImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -84,7 +84,7 @@ public final class scheduleImpl {
     internal_static_schedule_SendReminder_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_schedule_SendReminder_descriptor,
-        new java.lang.String[] { "Message", });
+        new java.lang.String[] { "Message", "Email", });
     internal_static_schedule_ResponseMessage_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_schedule_ResponseMessage_fieldAccessorTable = new

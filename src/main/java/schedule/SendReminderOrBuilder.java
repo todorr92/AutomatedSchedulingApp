@@ -16,4 +16,14 @@ public interface SendReminderOrBuilder extends
    */
   com.google.protobuf.ByteString
       getMessageBytes();
+
+  /**
+   * <code>string email = 2;</code>
+   */
+  java.lang.String getEmail();
+  /**
+   * <code>string email = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getEmailBytes();
 }

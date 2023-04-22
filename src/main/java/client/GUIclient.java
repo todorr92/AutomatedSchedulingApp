@@ -128,10 +128,10 @@ public class GUIclient extends JFrame {
 		eventMessageField.setBounds(113, 193, 249, 152);
 		contentPane.add(eventMessageField);
 		
-		JLabel lblNewLabel_3_3_1 = new JLabel("Choose");
-		lblNewLabel_3_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_3_3_1.setBounds(10, 614, 67, 19);
-		contentPane.add(lblNewLabel_3_3_1);
+		JLabel integrationOption = new JLabel("Choose");
+		integrationOption.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		integrationOption.setBounds(10, 614, 67, 19);
+		contentPane.add(integrationOption);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 79, 784, 14);

@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
 import integrate.integrateGrpc.integrateImplBase;;
 
 
@@ -24,5 +25,35 @@ public class ServerIntegrate extends integrateImplBase{
 
 		server.awaitTermination();
 	}
+
+	@Override
+	public StreamObserver<Integration> doIntegration(StreamObserver<ResponseMessage> responseObserver) {
+		StringBuilder sb = new StringBuilder();
+		
+		return new StreamObserver<Integration>() {
+
+			@Override
+			public void onNext(Integration request) {
+				sb.append("Integration ");
+				sb.append(request.getName());
+				sb.append("is implemented!\n");
+				
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				responseObserver.onError(t);
+			}
+
+			@Override
+			public void onCompleted() {
+				responseObserver.onNext(ResponseMessage.newBuilder().setMessage(sb.toString()).build());
+				responseObserver.onCompleted();
+				
+			}
+			
+		};
+	}
+	
 
 }
