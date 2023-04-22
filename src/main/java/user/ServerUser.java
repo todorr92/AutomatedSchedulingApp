@@ -8,7 +8,9 @@ import user.userGrpc.userImplBase;;
 public class ServerUser extends userImplBase{
 	public static void main(String[] args) throws InterruptedException, IOException {
 		
-		ServerUser userService = new ServerUser();
+		System.out.println("Starting User server.");
+		
+		UserService userService = new UserService();
 		
 		int port = 50051;
 		
@@ -20,6 +22,7 @@ public class ServerUser extends userImplBase{
 		System.out.println("User service started, listening on " + port);
 
 		server.awaitTermination();
-	}
+	}	
+	
 
 }
