@@ -3,7 +3,9 @@ import java.io.IOException;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
 import schedule.scheduleGrpc.scheduleImplBase;
+import user.LoginMessage;
 
 public class ServerSchedule extends scheduleImplBase{
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -23,5 +25,31 @@ public class ServerSchedule extends scheduleImplBase{
 
 		server.awaitTermination();
 	}
+
+	@Override
+	public void bookEvent(Event request, StreamObserver<ResponseMessage> responseObserver) {
+		String eventName = request.getName();
+		int eventId = request.getId();
+		
+		ResponseMessage.Builder message = ResponseMessage.newBuilder();
+		
+		message.setMessage("Event with id: " + eventId + " and name: " + eventName + " is now created.");
+		
+		responseObserver.onNext(message.build());
+		responseObserver.onCompleted();
+
+	}
+
+	@Override
+	public void sendReminder(SendReminder request, StreamObserver<ResponseMessage> responseObserver) {
+		String email = request.getEmail();
+		
+		ResponseMessage.Builder message = ResponseMessage.newBuilder();
+		
+		message.setMessage("Reminder sent to " + email);
+		responseObserver.onNext(message.build());
+		responseObserver.onCompleted();
+	}
+	
 
 }
