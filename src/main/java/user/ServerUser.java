@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.stub.StreamObserver;
 import user.userGrpc.userImplBase;;
 
 public class ServerUser extends userImplBase{
@@ -10,7 +11,7 @@ public class ServerUser extends userImplBase{
 		
 		System.out.println("Starting User server.");
 		
-		UserService userService = new UserService();
+		ServerUser userService = new ServerUser();
 		
 		int port = 50051;
 		
@@ -22,7 +23,31 @@ public class ServerUser extends userImplBase{
 		System.out.println("User service started, listening on " + port);
 
 		server.awaitTermination();
-	}	
+	}
+	
+	@Override
+	public void userLogin(LoginRequest request, StreamObserver<LoginMessage> responseObserver) {
+		
+		String userName = request.getUserName();
+		String password = request.getPassword();
+		
+		LoginMessage.Builder message = LoginMessage.newBuilder();
+		if(userName.equals(password)){
+			
+			message.setMessage("Welcome " + userName);
+		}else {
+			message.setMessage("Invalid username/password!");
+		}
+		
+		responseObserver.onNext(message.build());
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public void userLogout(EmptyMessage request, StreamObserver<LogOutMessage> responseObserver) {
+		// TODO Auto-generated method stub
+		super.userLogout(request, responseObserver);
+	}
 	
 
 }

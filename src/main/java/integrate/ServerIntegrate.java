@@ -9,6 +9,8 @@ import integrate.integrateGrpc.integrateImplBase;;
 public class ServerIntegrate extends integrateImplBase{
 	public static void main(String[] args) throws InterruptedException, IOException {
 		
+		System.out.println("Starting Integrate server.");
+		
 		ServerIntegrate integrateService = new ServerIntegrate();
 		
 		int port = 50053;

@@ -7,6 +7,8 @@ import schedule.scheduleGrpc.scheduleImplBase;
 
 public class ServerSchedule extends scheduleImplBase{
 	public static void main(String[] args) throws InterruptedException, IOException {
+		
+		System.out.println("Starting Schedule server.");
 			
 		ServerSchedule scheduleService = new ServerSchedule();
 		
