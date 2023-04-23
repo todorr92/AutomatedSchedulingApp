@@ -15,6 +15,7 @@ public class ServerUser extends userImplBase{
 		
 		int port = 50051;
 		
+		try {
 		Server server = ServerBuilder.forPort(port)
 				.addService(userService)
 				.build()
@@ -23,6 +24,11 @@ public class ServerUser extends userImplBase{
 		System.out.println("User service started, listening on " + port);
 
 		server.awaitTermination();
+		} catch(IOException e){
+			e.printStackTrace();
+		} catch(InterruptedException e){
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

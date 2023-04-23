@@ -15,7 +15,7 @@ public class ServerIntegrate extends integrateImplBase{
 		ServerIntegrate integrateService = new ServerIntegrate();
 		
 		int port = 50053;
-		
+		try {
 		Server server = ServerBuilder.forPort(port)
 				.addService(integrateService)
 				.build()
@@ -24,6 +24,11 @@ public class ServerIntegrate extends integrateImplBase{
 		System.out.println("User service started, listening on " + port);
 
 		server.awaitTermination();
+		} catch(IOException e){
+			e.printStackTrace();
+		} catch(InterruptedException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override

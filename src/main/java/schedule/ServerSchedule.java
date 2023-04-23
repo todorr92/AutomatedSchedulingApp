@@ -5,7 +5,6 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import schedule.scheduleGrpc.scheduleImplBase;
-import user.LoginMessage;
 
 public class ServerSchedule extends scheduleImplBase{
 	public static void main(String[] args) throws InterruptedException, IOException {
@@ -16,6 +15,7 @@ public class ServerSchedule extends scheduleImplBase{
 		
 		int port = 50052;
 		
+		try {
 		Server server = ServerBuilder.forPort(port)
 				.addService(scheduleService)
 				.build()
@@ -24,6 +24,11 @@ public class ServerSchedule extends scheduleImplBase{
 		System.out.println("User service started, listening on " + port);
 
 		server.awaitTermination();
+		} catch(IOException e){
+			e.printStackTrace();
+		} catch(InterruptedException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
