@@ -106,11 +106,11 @@ private  void registerService(Properties prop) {
 	@Override
 	public void bookEvent(Event request, StreamObserver<ResponseMessage> responseObserver) {
 		String eventName = request.getName();
-		int eventId = request.getId();
+		String eventEmail = request.getEmail();
 		
 		ResponseMessage.Builder message = ResponseMessage.newBuilder();
 		
-		message.setMessage("Event with id: " + eventId + " and name: " + eventName + " is now created.");
+		message.setMessage("Event with name: " + eventName + " and email address" + eventEmail + " is now created.");
 		
 		responseObserver.onNext(message.build());
 		responseObserver.onCompleted();

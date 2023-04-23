@@ -1,6 +1,23 @@
 package client;
 
 import java.awt.EventQueue;
+import integrate.integrateGrpc.integrateStub;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import integrate.integrateGrpc.integrateBlockingStub;
+import user.userGrpc.userStub;
+import user.userGrpc;
+import user.userGrpc.userBlockingStub;
+import schedule.scheduleGrpc.scheduleStub;
+import schedule.scheduleGrpc.scheduleBlockingStub;
+import user.LoginRequest;
+import user.LoginMessage;
+import schedule.Event;
+import schedule.ResponseMessage;
+import schedule.SendReminder;
+import schedule.scheduleGrpc;
+import integrate.integrateGrpc;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,6 +25,12 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
@@ -15,9 +38,23 @@ import javax.swing.JTextArea;
 import com.toedter.calendar.JCalendar;
 import javax.swing.JSeparator;
 import javax.swing.JList;
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 import javax.swing.AbstractListModel;
 
 public class GUIclient extends JFrame {
+	
+	private static integrateBlockingStub integrateBlockingStub;
+	private static integrateStub integrateAsyncStub;
+	private static userBlockingStub userBlockingStub;
+	private static userStub userAsyncStub;
+	private static scheduleBlockingStub scheduleBlockingStub;
+	private static scheduleStub scheduleAsyncStub;
+	private ServiceInfo serviceInfo;
+
+
 
 	/**
 	 * 
@@ -45,11 +82,99 @@ public class GUIclient extends JFrame {
 			}
 		});
 	}
+	
+	
+
+private void discoverService(String user_service_type, String integrate_service_type, String schedule_service_type) {
+	
+	
+	try {
+		// Create a JmDNS instance
+		JmDNS jmdnsUser = JmDNS.create(InetAddress.getLocalHost());
+//		JmDNS jmdnsSchedule = JmDNS.create(InetAddress.getLocalHost());
+//		JmDNS jmdnsIntegrate = JmDNS.create(InetAddress.getLocalHost());
+
+			
+		jmdnsUser.addServiceListener(user_service_type, new ServiceListener() {
+			
+			@Override
+			public void serviceResolved(ServiceEvent event) {
+				System.out.println("User Service resolved: " + event.getInfo());
+
+				serviceInfo = event.getInfo();
+
+				int port = serviceInfo.getPort();
+				
+				System.out.println("resolving " + user_service_type + " with properties ...");
+				System.out.println("\t port: " + port);
+				System.out.println("\t type:"+ event.getType());
+				System.out.println("\t name: " + event.getName());
+				System.out.println("\t description/properties: " + serviceInfo.getNiceTextString());
+				System.out.println("\t host: " + serviceInfo.getHostAddresses()[0]);
+			
+				
+			}
+			
+			@Override
+			public void serviceRemoved(ServiceEvent event) {
+				System.out.println("User service removed: " + event.getInfo());
+
+				
+			}
+			
+			@Override
+			public void serviceAdded(ServiceEvent event) {
+				System.out.println("User service added: " + event.getInfo());
+
+				
+			}
+		});
+
+		
+		// Wait a bit
+		Thread.sleep(2000);
+		
+		jmdnsUser.close();
+
+	} catch (UnknownHostException e) {
+		System.out.println(e.getMessage());
+	} catch (IOException e) {
+		System.out.println(e.getMessage());
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+}
 
 	/**
 	 * Create the frame.
 	 */
 	public GUIclient() {
+		
+		String user_service_type = "_user._tcp.local.";
+		String integrate_service_type = "_integrate._tcp.local.";
+		String schedule_service_type = "_schedule._tcp.local.";
+		discoverService(user_service_type, integrate_service_type, schedule_service_type);
+		
+//		String host = serviceInfo.getHostAddresses()[0];
+//		int port = serviceInfo.getPort();
+//		
+		ManagedChannel channel = ManagedChannelBuilder
+				.forAddress("localhost", 50051)
+				.usePlaintext()
+				.build();
+		//stubs -- generate from proto
+		userBlockingStub = userGrpc.newBlockingStub(channel);
+//		scheduleBlockingStub = scheduleGrpc.newBlockingStub(channel);
+//		integrateBlockingStub = integrateGrpc.newBlockingStub(channel);
+		
+
+		userAsyncStub = userGrpc.newStub(channel);
+//		scheduleAsyncStub = scheduleGrpc.newStub(channel);
+//		integrateAsyncStub = integrateGrpc.newStub(channel);
+		
 		setAlwaysOnTop(true);
 		setTitle("AutomatedSchedulingApp");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,25 +202,36 @@ public class GUIclient extends JFrame {
 		contentPane.add(usernameField);
 		usernameField.setColumns(10);
 		
-		JButton loginBtn = new JButton("Login");
-		loginBtn.setBounds(384, 12, 85, 21);
-		loginBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(loginBtn);
-		
-		JLabel messages = new JLabel("Placeholder for messages");
-		messages.setBounds(519, 6, 250, 50);
-		messages.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(messages);
-		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(266, 14, 96, 19);
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(passwordField);
 		
-		JLabel evetName = new JLabel("Event Name");
-		evetName.setBounds(10, 151, 80, 19);
-		evetName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(evetName);
+		JTextArea messages = new JTextArea();
+		messages.setBounds(535, 10, 242, 52);
+		contentPane.add(messages);
+		
+		JButton loginBtn = new JButton("Login");
+		loginBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String username = usernameField.getText();
+				String password = passwordField.getText();
+				
+				LoginRequest login = LoginRequest.newBuilder().setUserName(username).setPassword(password).build();
+				LoginMessage response = userBlockingStub.userLogin(login);
+				
+				messages.append(response.toString());
+
+			}
+		});
+		loginBtn.setBounds(384, 12, 85, 21);
+		loginBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(loginBtn);
+		
+		JLabel eventName = new JLabel("Event Name");
+		eventName.setBounds(10, 151, 80, 19);
+		eventName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(eventName);
 		
 		JLabel eventMessage = new JLabel("Message");
 		eventMessage.setBounds(10, 205, 67, 19);
@@ -128,6 +264,23 @@ public class GUIclient extends JFrame {
 		eventMessageField.setBounds(113, 193, 249, 152);
 		contentPane.add(eventMessageField);
 		
+		JButton btnCreateEvent = new JButton("Create Event");
+		btnCreateEvent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String eventName = eventField.getText();
+				String eventEmail = eventEmailField.getText();
+				
+				Event event = Event.newBuilder().setName(eventName).setEmail(eventEmail).build();
+				ResponseMessage response = scheduleBlockingStub.bookEvent(event);
+				messages.append(response.toString());
+
+			}
+		});
+
+		btnCreateEvent.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnCreateEvent.setBounds(337, 370, 145, 21);
+		contentPane.add(btnCreateEvent);
+		
 		JLabel integrationOption = new JLabel("Choose");
 		integrationOption.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		integrationOption.setBounds(10, 614, 67, 19);
@@ -151,10 +304,6 @@ public class GUIclient extends JFrame {
 		lblIntegrate.setBounds(10, 554, 200, 29);
 		contentPane.add(lblIntegrate);
 		
-		JButton btnCreateEvent = new JButton("Create Event");
-		btnCreateEvent.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnCreateEvent.setBounds(337, 370, 145, 21);
-		contentPane.add(btnCreateEvent);
 		
 		JCalendar calendar = new JCalendar();
 		calendar.setBounds(519, 193, 250, 152);
@@ -214,8 +363,22 @@ public class GUIclient extends JFrame {
 		contentPane.add(btnIntegrate);
 		
 		JButton btnSendReminder = new JButton("Send Reminder");
+		btnSendReminder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String reminderEmail = reminderEmailField.getText();
+				String reminderMessage = reminderMessageField.getText();
+				
+				SendReminder reminder = SendReminder.newBuilder().setEmail(reminderEmail).setMessage(reminderMessage).build();
+				ResponseMessage response = scheduleBlockingStub.sendReminder(reminder);
+				messages.append(response.toString());
+
+			}
+		});
+
 		btnSendReminder.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnSendReminder.setBounds(337, 511, 145, 21);
 		contentPane.add(btnSendReminder);
+		
+		
 	}
 }
